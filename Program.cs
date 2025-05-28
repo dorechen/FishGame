@@ -10,12 +10,14 @@ namespace FishGame
             Console.CursorVisible = false;
             Console.Clear();
             
-            string fishArt = "><(((°>";
+            string fishRight = "><(((°>";
+            string fishLeft = "<°)))><";
             
             bool running = true;
             int position = 10;
-            
-            Console.WriteLine("Press Esc to exit.");
+            bool movingRight = true;
+            Random random = new Random();
+            int nextAction;
             
             while (running)
             {
@@ -23,11 +25,16 @@ namespace FishGame
                 
                 // Display fish
                 Console.SetCursorPosition(position, 10);
-                Console.Write(fishArt);
-                
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write(movingRight ? fishRight: fishLeft);
+                Console.ResetColor();
+
+                // Movement
+                nextAction = random.Next(100);
+
                 // Display instructions
                 Console.SetCursorPosition(0, 20);
-                Console.WriteLine("Press Esc to exit");
+                Console.WriteLine("Press Esc to exit ", nextAction);
                 
                 // Check for key press
                 if (Console.KeyAvailable)
@@ -38,11 +45,37 @@ namespace FishGame
                         running = false;
                     }
                 }
+
+                if (nextAction < 5)
+                {
+                    movingRight = !movingRight;
+                }
+                else if (nextAction > 3 && nextAction < 50)
+                {
+                    Thread.Sleep(1000);
+                    continue;
+                }
+
+                if (movingRight)
+                    {
+                        position++;
+                        if (position > Console.WindowWidth - fishRight.Length)
+                        {
+                            movingRight = false;
+                            position = Console.WindowWidth - fishRight.Length;
+                        }
+                    }
+                    else
+                    {
+                        position--;
+                        if (position < 0)
+                        {
+                            movingRight = true;
+                            position = 0;
+                        }
+                    }
                 
-                // Move right
-                position = (position + 1) % (Console.WindowWidth - fishArt.Length);
-                
-                Thread.Sleep(200);
+                Thread.Sleep(500);
             }
             
             Console.Clear();
