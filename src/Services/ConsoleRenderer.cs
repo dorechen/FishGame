@@ -11,7 +11,7 @@ namespace FishGame.Services
             Console.Clear();
         }
 
-        public void Render(Fish fish)
+        public void RenderFish(Fish fish)
         {
             Console.Clear();
 
@@ -22,6 +22,14 @@ namespace FishGame.Services
 
             Console.SetCursorPosition(0, Console.WindowHeight);
             Console.WriteLine("Press Esc to exit ");
+        }
+
+        public void RenderFood(Food food)
+        {
+            Console.SetCursorPosition(food.X, food.Y);
+            Console.ForegroundColor = food.Color;
+            Console.Write(food.GetSprite());
+            Console.ResetColor();
         }
         
         public void Cleanup()

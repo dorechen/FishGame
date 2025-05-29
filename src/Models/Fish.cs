@@ -11,7 +11,7 @@ namespace FishGame.Models
 
         private readonly string _rightSprite = "><(((°>";
         private readonly string _leftSprite = "<°)))><";
-        private readonly Random _random = new Random();
+        private readonly Random _random = new Random(); // TODO: add a seed
 
         public Fish(int startX, int startY, bool facingRight, ConsoleColor color)
         {
