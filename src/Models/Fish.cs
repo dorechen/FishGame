@@ -8,6 +8,7 @@ namespace FishGame.Models
         public int X { get; set; }
         public int Y { get; set; }
         public bool isFacingRight { get; set; }
+        public int fullness { get; set; } // range from 0 to 100(%)
 
         private readonly string _rightSprite = "><(((°>";
         private readonly string _leftSprite = "<°)))><";
@@ -19,11 +20,42 @@ namespace FishGame.Models
             Y = startY;
             isFacingRight = facingRight;
             Color = color;
+            fullness = 50;
         }
 
         public string GetSprite() => isFacingRight ? _rightSprite : _leftSprite;
 
-        public int GetLength() => GetSprite().Length;   
+        public int GetLength() => GetSprite().Length;
+
+        public void Eat(int satiety)
+        {
+            fullness = fullness + satiety;
+        }
+
+        public void InteractWithFood(int foodX, int foodY)
+        {
+            if (X > foodX)
+            {
+                isFacingRight = false;
+                X--;
+            }
+            else if (X < foodX)
+            {
+                isFacingRight = true;
+                X++;
+            }
+
+            if (Y > foodY)
+            {
+                Y--;
+            }
+            else if (Y < foodY)
+            {
+                Y++;
+            }
+        }
+
+        public void DecreaseFullness() => fullness = fullness - 5;
 
         public void MaybeChangeDirection()
         {
@@ -39,8 +71,9 @@ namespace FishGame.Models
             return rand < 45;
         }
 
-        public void Move(int consoleWidth)
+        public void Move(int consoleWidth, int consoleHeight)
         {
+            int rand = _random.Next(100);
             if (isFacingRight)
             {
                 X++;
@@ -57,6 +90,29 @@ namespace FishGame.Models
                 {
                     isFacingRight = !isFacingRight;
                     X = 0;
+                }
+            }
+
+                if (rand < 20){
+                if (Y > consoleHeight - 5)
+                {
+                    Y--;
+                }
+                else if (Y < 3)
+                {
+                    Y++;
+
+                }
+                else
+                {
+                    if (rand < 10)
+                    {
+                        Y--;
+                    }
+                    else
+                    {
+                        Y++;
+                    }
                 }
             }
         }

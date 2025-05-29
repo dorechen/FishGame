@@ -9,7 +9,7 @@ namespace FishGame.Services
         private readonly Fish _fish;
         private readonly ConsoleRenderer _renderer;
         private bool _isRunning = false;
-        private Food _food = null;
+        private Food? _food = null;
 
         private readonly Random _random = new Random();
 
@@ -57,17 +57,31 @@ namespace FishGame.Services
                     continue;
                 }
 
-                _fish.Move(Console.WindowWidth);
+                _fish.Move(Console.WindowWidth, Console.WindowHeight);
 
-                if(_food != null)
+                if(_food != null && _fish.fullness < 100)
                 {
                     _food.Fall(Console.WindowHeight);
+
+                    _fish.InteractWithFood(_food.X, _food.Y);
+                    if (FishTouchesFood(_fish, _food))
+                    {
+                        _fish.Eat(_food.Satiety);
+                        _food = null;
+                    }
                 }
 
-                Thread.Sleep(500);
+                Thread.Sleep(200);
             }
 
             _renderer.Cleanup();
+        }
+
+        private bool FishTouchesFood( Fish fish, Food food)
+        {
+            bool xOverlap = ((food.X < fish.X+fish.GetLength()) && (food.X + food.GetLength() > fish.X));
+            bool yOverlap = food.Y == fish.Y;
+            return xOverlap && yOverlap;
         }
     }
 }
