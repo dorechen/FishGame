@@ -37,15 +37,7 @@ namespace FishGame.Services
                 if (Console.KeyAvailable)
                 {
                     var key = Console.ReadKey(true);
-                    // esc
-                    if (key.Key == ConsoleKey.Escape)
-                    {
-                        _isRunning = false;
-                    }
-                    if (key.Key == ConsoleKey.F)
-                    {
-                        _food = new Food(_random.Next(Console.WindowWidth));
-                    }
+                    HandleKeyPress(key.Key);
                 }
 
                 // Game logic
@@ -75,6 +67,28 @@ namespace FishGame.Services
             }
 
             _renderer.Cleanup();
+        }
+
+        private void HandleKeyPress(ConsoleKey key)
+        {
+            switch (key)
+            {
+                case ConsoleKey.Escape:
+                    _isRunning = false;
+                    break;
+                case ConsoleKey.F:
+                    _food = new Food(_random.Next(Console.WindowWidth));
+                    break;
+                case ConsoleKey.S:
+                    Console.Clear();
+                    
+                    // Display status and wait for any key
+                    _renderer.DisplayFishStatus(_fish);
+                    Console.ReadKey(true);
+                    break;
+                default:
+                    break;
+            }
         }
 
         private bool FishTouchesFood( Fish fish, Food food)
