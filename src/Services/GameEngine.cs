@@ -1,21 +1,43 @@
 using System;
 using System.Threading;
 using FishGame.Models;
+using FishGame.Services;
 
 namespace FishGame.Services
 {
     class GameEngine
     {
+        private readonly FishDataService _dataService;
+        private readonly string _userId; 
         private readonly Fish _fish;
         private readonly ConsoleRenderer _renderer;
         private bool _isRunning = false;
         private Food? _food = null;
 
         private readonly Random _random = new Random();
+        private DateTime _lastHungerUpdate = DateTime.UtcNow;
+        private readonly TimeSpan _hungerInterval = TimeSpan.FromMinutes(10); // TODO: refactor all the hunger contants??
 
-        public GameEngine()
+        private DateTime _lastSaveTime = DateTime.UtcNow;
+        private readonly TimeSpan _saveInterval = TimeSpan.FromMinutes(1);
+
+        public GameEngine(string userId = "default")
         {
-            _fish = new Fish(10, 10, true, (ConsoleColor)_random.Next(0, 16));
+            // TODO: add actual user auth
+            _userId = userId;
+            _dataService = new FishDataService();
+
+            var savedFish = _dataService.LoadFish(_userId);
+
+            if (savedFish != null)
+            {
+                _fish = savedFish;
+            }
+            else
+            {
+                _fish = new Fish(10, 10, true, (ConsoleColor)_random.Next(0, 16));
+            }
+
             _renderer = new ConsoleRenderer();
         }
 
@@ -63,6 +85,22 @@ namespace FishGame.Services
                     }
                 }
 
+                DateTime now = DateTime.UtcNow;
+                if (now - _lastHungerUpdate >= _hungerInterval)
+                {
+                    _fish.DecreaseFullness();
+                    _lastHungerUpdate = now;
+
+                    //TODO: add persistence here
+                    _dataService.SaveFish(_fish, _userId);
+                }
+
+                if (now - _lastSaveTime >= _saveInterval)
+                {
+                    _dataService.SaveFish(_fish, _userId);
+                    _lastSaveTime = now;
+                }
+
                 Thread.Sleep(200);
             }
 
@@ -74,6 +112,7 @@ namespace FishGame.Services
             switch (key)
             {
                 case ConsoleKey.Escape:
+                    _dataService.SaveFish(_fish, _userId);
                     _isRunning = false;
                     break;
                 case ConsoleKey.F:

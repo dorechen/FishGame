@@ -4,6 +4,8 @@ namespace FishGame.Models
 {
     public class Fish
     {
+        public Guid Id { get; set; }
+        public DateTime LastUpdate { get; set; } = DateTime.UtcNow;
         public ConsoleColor Color { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
@@ -16,6 +18,7 @@ namespace FishGame.Models
 
         public Fish(int startX, int startY, bool facingRight, ConsoleColor color)
         {
+            Id = Guid.NewGuid();
             X = startX;
             Y = startY;
             isFacingRight = facingRight;
@@ -55,7 +58,11 @@ namespace FishGame.Models
             }
         }
 
-        public void DecreaseFullness() => fullness = fullness - 5;
+        public void DecreaseFullness()
+        {
+            fullness = Math.Max(0, fullness - 5);
+            LastUpdate = DateTime.UtcNow;
+        }
 
         public void MaybeChangeDirection()
         {
