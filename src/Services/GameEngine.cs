@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using FishGame.Models;
 using FishGame.Services;
+using FishGame.Constants;
 
 namespace FishGame.Services
 {
@@ -16,10 +17,10 @@ namespace FishGame.Services
 
         private readonly Random _random = new Random();
         private DateTime _lastHungerUpdate = DateTime.UtcNow;
-        private readonly TimeSpan _hungerInterval = TimeSpan.FromMinutes(10); // TODO: refactor all the hunger contants??
+        private readonly TimeSpan _hungerInterval = GameConstants.Hunger.DecreaseIntervalTimeSpan;
 
         private DateTime _lastSaveTime = DateTime.UtcNow;
-        private readonly TimeSpan _saveInterval = TimeSpan.FromMinutes(1);
+        private readonly TimeSpan _saveInterval = GameConstants.Timing.SaveIntervalTimeSpan;
 
         public GameEngine(string userId = "default")
         {
@@ -73,7 +74,7 @@ namespace FishGame.Services
 
                 _fish.Move(Console.WindowWidth, Console.WindowHeight);
 
-                if(_food != null && _fish.fullness < 100)
+                if(_food != null && _fish.fullness < GameConstants.Hunger.MaxFullness)
                 {
                     _food.Fall(Console.WindowHeight);
 
@@ -101,7 +102,7 @@ namespace FishGame.Services
                     _lastSaveTime = now;
                 }
 
-                Thread.Sleep(200);
+                Thread.Sleep(GameConstants.Timing.GameLoopDelayMS);
             }
 
             _renderer.Cleanup();
@@ -132,7 +133,7 @@ namespace FishGame.Services
 
         private bool FishTouchesFood( Fish fish, Food food)
         {
-            bool xOverlap = ((food.X < fish.X+fish.GetLength()) && (food.X + food.GetLength() > fish.X));
+            bool xOverlap = (food.X < fish.X+fish.GetLength()) && (food.X + food.GetLength() > fish.X);
             bool yOverlap = food.Y == fish.Y;
             return xOverlap && yOverlap;
         }

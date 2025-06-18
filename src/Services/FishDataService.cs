@@ -2,6 +2,7 @@ using System;
 using Microsoft.Data.Sqlite;
 using System.IO;
 using FishGame.Models;
+using FishGame.Constants;
 
 namespace FishGame.Services;
 
@@ -115,13 +116,12 @@ public class FishDataService
         DateTime now = DateTime.UtcNow;
         TimeSpan elapsed = now - lastUpdated;
 
-        // Decrease fullness by 5 every 10 minutes (matching the interval in GameEngine)
-        // TODO: refactor hunger decrease as a constant somewhere?
-        int decreaseAmount = (int)(elapsed.TotalMinutes / 10) * 5;
+        // Decrease fullness by GameConstants.Hunger.DecreaseAmount every GameConstants.Hunger.DecreaseInterval minutes
+        int decreaseAmount = (int)(elapsed.TotalMinutes / GameConstants.Hunger.DecreaseInterval) * GameConstants.Hunger.DecreaseAmount;
 
         if (decreaseAmount > 0)
         {
-            for (int i = 0; i < decreaseAmount / 5; i++)
+            for (int i = 0; i < decreaseAmount / GameConstants.Hunger.DecreaseAmount; i++)
             {
                 fish.DecreaseFullness();
             }
