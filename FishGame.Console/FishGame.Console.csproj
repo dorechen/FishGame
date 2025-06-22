@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FishGame.Core\FishGame.Core.csproj" />
+  </ItemGroup>
+
 </Project>

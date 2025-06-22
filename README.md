@@ -10,7 +10,8 @@ A simple virtual pet fish game that runs in the terminal, created with C# and .N
 ## How to Run
 
 ```
-dotnet run
+dotnet run --project FishGame.Api
+dotnet run --project FishGame.Console
 ```
 
 ## Future Features
