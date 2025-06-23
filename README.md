@@ -14,6 +14,10 @@ dotnet run --project FishGame.Api
 dotnet run --project FishGame.Console
 ```
 
+## Swagger
+
+`http://localhost:5002/swagger`
+
 ## Future Features
 
 - Fish stats (hunger, happiness, etc.)
