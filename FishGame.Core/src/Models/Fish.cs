@@ -1,9 +1,13 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FishGame.Models
 {
+    [Table("Fish")] // specifies the table name
     public class Fish
     {
+        [Key] // marks Id as primary key
         public Guid Id { get; set; }
         public DateTime LastUpdate { get; set; } = DateTime.UtcNow;
         public ConsoleColor Color { get; set; }
@@ -12,9 +16,15 @@ namespace FishGame.Models
         public bool isFacingRight { get; set; }
         public int fullness { get; set; } // range from 0 to 100(%)
 
+        [NotMapped] // fields that shouldn't be stored in db
         private readonly string _rightSprite = "><(((°>";
+        [NotMapped]
         private readonly string _leftSprite = "<°)))><";
+        [NotMapped]
         private readonly Random _random = new Random(); // TODO: add a seed
+
+        // default parameterless constructor, required for EF Core
+        protected Fish() { }
 
         public Fish(int startX, int startY, bool facingRight, ConsoleColor color)
         {
@@ -100,7 +110,7 @@ namespace FishGame.Models
                 }
             }
 
-                if (rand < 20){
+            if (rand < 20){
                 if (Y > consoleHeight - 5)
                 {
                     Y--;
@@ -108,7 +118,6 @@ namespace FishGame.Models
                 else if (Y < 3)
                 {
                     Y++;
-
                 }
                 else
                 {

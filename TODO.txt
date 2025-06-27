@@ -1,0 +1,42 @@
+I'll break down the tasks into very small, manageable steps, indicating which project each task belongs to:
+1. Set Up Database (in FishGame.Core) 📁
+[x] Add EF Core NuGet packages
+[x] Create FishDbContext.cs class
+[x] Update Fish.cs with any needed database annotations
+[ ] Create repository interface and implementation
+[-] Set up initial database migration
+2. Create API Endpoints (in FishGame.Api) 🌐
+[ ] Create FishController.cs
+[ ] Add endpoint to get fish: GET /api/fish/default
+[ ] Add endpoint to create fish: POST /api/fish/default
+[ ] Add endpoint to save fish: PUT /api/fish/default
+[ ] Set up dependency injection for database
+3. Build API Client (in FishGame.ApiClient) 🔌
+[ ] Create FishApiClient.cs
+[ ] Add method to get fish from API
+[ ] Add method to create new fish
+[ ] Add method to save fish state
+[ ] Add error handling
+4. Update Console Game (in FishGame.Console) 🎮
+[ ] Modify game to use ApiClient instead of direct fish management
+[ ] Add load fish at startup
+[ ] Add save fish when game closes
+[ ] Handle cases when API is not available
+5. Testing & Verification 🧪
+[ ] Test database creation and access
+[ ] Test API endpoints
+[ ] Test full game flow with API integration
+[ ] Verify fish persistence between game sessions
+The flow will work like this:
+Game starts
+└─> ApiClient.GetFish("default")
+    └─> API /fish/default
+        └─> Database
+            └─> If fish exists: return it
+            └─> If no fish: create new one
+
+Game ends
+└─> ApiClient.SaveFish(fish)
+    └─> API /fish/default
+        └─> Database
+            └─> Update fish state

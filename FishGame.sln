@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishGame.Api", "FishGame.Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishGame.Console", "FishGame.Console\FishGame.Console.csproj", "{722FA3A9-867E-40EF-A607-64B70AE530A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishGame.ApiClient", "FishGame.ApiClient\FishGame.ApiClient.csproj", "{70FD9B7C-74BA-4CDB-9940-5D378861012C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{722FA3A9-867E-40EF-A607-64B70AE530A9}.Release|x64.Build.0 = Release|Any CPU
 		{722FA3A9-867E-40EF-A607-64B70AE530A9}.Release|x86.ActiveCfg = Release|Any CPU
 		{722FA3A9-867E-40EF-A607-64B70AE530A9}.Release|x86.Build.0 = Release|Any CPU
+		{70FD9B7C-74BA-4CDB-9940-5D378861012C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70FD9B7C-74BA-4CDB-9940-5D378861012C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70FD9B7C-74BA-4CDB-9940-5D378861012C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{70FD9B7C-74BA-4CDB-9940-5D378861012C}.Debug|x64.Build.0 = Debug|Any CPU
+		{70FD9B7C-74BA-4CDB-9940-5D378861012C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{70FD9B7C-74BA-4CDB-9940-5D378861012C}.Debug|x86.Build.0 = Debug|Any CPU
+		{70FD9B7C-74BA-4CDB-9940-5D378861012C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70FD9B7C-74BA-4CDB-9940-5D378861012C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70FD9B7C-74BA-4CDB-9940-5D378861012C}.Release|x64.ActiveCfg = Release|Any CPU
+		{70FD9B7C-74BA-4CDB-9940-5D378861012C}.Release|x64.Build.0 = Release|Any CPU
+		{70FD9B7C-74BA-4CDB-9940-5D378861012C}.Release|x86.ActiveCfg = Release|Any CPU
+		{70FD9B7C-74BA-4CDB-9940-5D378861012C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

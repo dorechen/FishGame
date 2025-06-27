@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FishGame.Core\FishGame.Core.csproj" />
+    <ProjectReference Include="..\FishGame.ApiClient\FishGame.ApiClient.csproj" />
   </ItemGroup>
 
 </Project>
